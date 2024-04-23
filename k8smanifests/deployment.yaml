@@ -1,0 +1,23 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: sfm-deploy
+  labels:
+    app: sfm
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: sfm
+  template:
+    metadata:
+      labels:
+        app: sfm
+    spec:
+      containers:
+      - name: sfm
+        image: aakashhandibar/stock-forecasting:latest
+        imagepullpolicy: Always
+        ports:
+        - containerPort: 8501
+
