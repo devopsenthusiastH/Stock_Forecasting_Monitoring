@@ -34,7 +34,7 @@ pipeline {
             steps {
                 script {
                     withDockerRegistry(credentialsId: 'docker-cred', toolName: 'docker') {
-                        sh "docker build -t aakashhandibar/stock_forecasting:v2 ."
+                        sh "docker build -t aakashhandibar/stock_forecasting:v2.1 ."
                     }
                 }
             }
@@ -48,9 +48,21 @@ pipeline {
             steps {
                 script {
                     withDockerRegistry(credentialsId: 'docker-cred', toolName: 'docker') {
-                        sh "docker push aakashhandibar/stock_forecasting:v2"
+                        sh "docker push aakashhandibar/stock_forecasting:v2.1"
                         sh "docker images"
-                        sh "docker rmi aakashhandibar/stock_forecasting:v2"
+                        sh "docker rmi aakashhandibar/stock_forecasting:v2.1"
+                    }
+                }
+            }
+        }
+        stage('Deploy to kubernetes') {
+            steps {
+                withKubeConfig(caCertificate: '', clusterName: 'eks-sfm', contextName: '', credentialsId: 'kube-secret', namespace: 'sfm', restrictKubeConfigAccess: false, serverUrl: 'https://9D6B2BA7A8966ACFE312ECE75277B58B.gr7.ap-south-1.eks.amazonaws.com') {
+                    dir('/var/lib/jenkins/workspace/sfm/k8smanifests') {
+                        sh "kubectl apply -f deployment.yaml"
+                        sh "kubectl apply -f service.yaml"
+                        sh "kubectl get pods"
+                        sh "kubectl get svc"
                     }
                 }
             }
