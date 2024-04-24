@@ -49,7 +49,8 @@ pipeline {
                 script {
                     withDockerRegistry(credentialsId: 'docker-cred', toolName: 'docker') {
                         sh "docker push aakashhandibar/stock_forecasting:v1"
-                        sh "docker ps "
+                        sh "docker images"
+                        sh "docker rmi aakashhandibar/stock_forecasting:v1"
                     }
                 }
             }
