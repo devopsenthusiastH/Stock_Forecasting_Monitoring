@@ -6,7 +6,6 @@ spec:
   selector:
     app: sfm
   ports:
-    - protocol: "TCP"
     - port: 8501
       targetPort: 8501
   type: LoadBalancer
