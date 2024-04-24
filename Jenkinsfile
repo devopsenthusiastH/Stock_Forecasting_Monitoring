@@ -34,23 +34,23 @@ pipeline {
             steps {
                 script {
                     withDockerRegistry(credentialsId: 'docker-cred', toolName: 'docker') {
-                        sh "docker build -t aakashhandibar/stock_forecasting:v1 ."
+                        sh "docker build -t aakashhandibar/stock_forecasting:v2 ."
                     }
                 }
             }
         }
         stage('Trivy Docker Image Scan') {
             steps {
-                sh "trivy image --format table -o trivy-image-report.html aakashhandibar/stock_forecasting:v1"
+                sh "trivy image --format table -o trivy-image-report.html aakashhandibar/stock_forecasting:v2"
             }
         }
         stage('Docker Push') {
             steps {
                 script {
                     withDockerRegistry(credentialsId: 'docker-cred', toolName: 'docker') {
-                        sh "docker push aakashhandibar/stock_forecasting:v1"
+                        sh "docker push aakashhandibar/stock_forecasting:v2"
                         sh "docker images"
-                        sh "docker rmi aakashhandibar/stock_forecasting:v1"
+                        sh "docker rmi aakashhandibar/stock_forecasting:v2"
                     }
                 }
             }
