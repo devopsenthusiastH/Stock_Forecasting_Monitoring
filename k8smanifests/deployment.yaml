@@ -16,8 +16,7 @@ spec:
     spec:
       containers:
       - name: sfm
-        image: aakashhandibar/stock-forecasting:v2
-        imagepullpolicy: Always
+        image: aakashhandibar/stock_forecasting:v2.1
         ports:
         - containerPort: 8501
 
