@@ -41,7 +41,7 @@ pipeline {
         }
         stage('Trivy Docker Image Scan') {
             steps {
-                sh "trivy image --format table -o trivy-image-report.html aakashhandibar/stock_forecasting:v2"
+                sh "trivy image --format table -o trivy-image-report.html aakashhandibar/stock_forecasting:v2.1"
             }
         }
         stage('Docker Push') {
